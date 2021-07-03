@@ -74,7 +74,8 @@ function EditModal(props) {
             onChange={(e) => setInput(e.target.value)}
             value={input}
           />
-          <Button
+                <Button
+            disabled={!input}
             type="submit"
             onClick={handleUpdateTodo}
             variant="contained"
