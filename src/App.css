@@ -14,5 +14,24 @@
 }
 
 .Todo-list{
-    margin:30px;
+    margin: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.todo-list-item{
+    width: 60%;
+}
+
+.deleteBtnStyle{
+    font-size: 20px;
+}
+
+.edit-todo-form{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 34px;
 }

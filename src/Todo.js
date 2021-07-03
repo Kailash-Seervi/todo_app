@@ -1,6 +1,9 @@
 import React from 'react';
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import db from './firebase';
+import Modal from './Modal';
 
 // <Checkbox
 //   checked={checked}
@@ -9,22 +12,25 @@ import Checkbox from "@material-ui/core/Checkbox";
 // />;
 
 function to_do(props) {
-    const rowstyle = {
-        display: 'block',
+    const listItemStyle = {
+        width: '60%'
     }
+
+
     return (
-      <FormControlLabel
-        style={rowstyle}
-        control={
-          <Checkbox
-            // checked={state.checkedB}
-            // onChange={handleChange}
-            name="checkedB"
-            color="primary"
-          />
-        }
-        label={props.todo}
-      />
+      <ListItem style={listItemStyle}>
+        <ListItemText
+          primary={props.todo.todo}
+          secondary="Some dummy deadline"
+        />
+        <Modal todo={props.todo.todo} id={props.todo.id} />
+        <DeleteForeverIcon
+          onClick={(event) =>
+            db.collection("todos").doc(props.todo.id).delete()
+          }
+          className="deleteBtnStyle"
+        ></DeleteForeverIcon>
+      </ListItem>
     );
 }
 
