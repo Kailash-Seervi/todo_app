@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import './App.css';
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography"
 import Todo from './Todo';
 import db from './firebase';
 import firebase from 'firebase';
-
-// import "@fontsource/roboto";
-
+import Drawer from './Drawer';
 
 
 function App() {
@@ -19,7 +18,8 @@ function App() {
 
     db.collection('todos').add({
       todo: input,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      isDone: false,
     })
     setInput('');
   };
@@ -32,7 +32,7 @@ function App() {
     db.collection('todos').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
       
       setTodo(snapshot.docs.map((doc) => {
-        return {id: doc.id,todo:doc.data().todo}
+        return {id: doc.id,todo:doc.data().todo, isDone: doc.data().isDone}
       }));
     })
   }, [])
@@ -40,35 +40,51 @@ function App() {
   const formStyle = {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexWrap: 'wrap'
   }
+
+  const handleTaskDone = (event, data_props) => {
+
+    db.collection("todos").doc(data_props.id).update({
+      isDone: !data_props.done
+    });
+    console.log(todo)
+   };
 
 
   return (
     <div className="App">
-      <h1>TO-DO App</h1>
-      <form style={formStyle}>
-        <TextField
-          label="Write a Todo"
-          value={input}
-          onChange={handleInputChange}
-        />
+      <Drawer>
+        <Typography variant="h4" >Your Tasks</Typography>
+        <form className="add-todo-ctn" style={formStyle}>
+          <TextField
+            className="add-todo-input"
+            label="Write a Todo"
+            value={input}
+            onChange={handleInputChange}
+          />
 
-        <Button
-          disabled={!input}
-          type="submit"
-          onClick={handleAddTodo}
-          variant="contained"
-          color="primary"
-        >
-          Add to-do
-        </Button>
-      </form>
-      <div className="Todo-list">
-        {todo.map((e) => {
-          return <Todo todo={e} />;
-        })}
-      </div>
+          <Button
+            className="add-todo-btn"
+            disabled={!input}
+            type="submit"
+            onClick={handleAddTodo}
+            variant="contained"
+            color="primary"
+          >
+            Add to-do
+          </Button>
+        </form>
+        <div className="Todo-list">
+          {todo.map((e) => {
+            return <Todo
+              todo={e}
+              change={handleTaskDone}
+                    />;
+          })}
+        </div>
+      </Drawer>
     </div>
   );
 }

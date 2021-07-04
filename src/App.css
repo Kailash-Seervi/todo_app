@@ -10,19 +10,21 @@
       sans-serif,
       Apple Color Emoji,
       Segoe UI Emoji,
-      Segoe UI Symbol,
+      Segoe UI Symbol;
+    margin:0;
 }
 
 .Todo-list{
-    margin: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .todo-list-item{
     width: 60%;
+    flex-wrap:wrap;
 }
 
 .deleteBtnStyle{
@@ -34,4 +36,8 @@
     justify-content: space-between;
     align-items: center;
     margin: 34px;
+}
+
+.add-todo-ctn div, .add-todo-ctn button{
+    margin:10px
 }
