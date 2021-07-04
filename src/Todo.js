@@ -24,7 +24,9 @@ function to_do(props) {
         display: 'inline-flex'
     }
 
-    const lineThrough = props.todo.isDone ? { textDecoration: 'line-through' } : null;
+    const lineThrough = props.todo.isDone
+      ? { textDecoration: "line-through", color: "#858585" }
+      : null;
 
     const checkBox = (
       <FormControlLabel
@@ -41,7 +43,7 @@ function to_do(props) {
             color="primary"
           />
         }
-        label={props.todo.todo}
+        label={null}
       />
     );
 

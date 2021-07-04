@@ -77,12 +77,14 @@ function App() {
           </Button>
         </form>
         <div className="Todo-list">
-          {todo.map((e) => {
+          {
+            todo.map((e) => {
             return <Todo
               todo={e}
               change={handleTaskDone}
                     />;
-          })}
+            })
+          }
         </div>
       </Drawer>
     </div>
